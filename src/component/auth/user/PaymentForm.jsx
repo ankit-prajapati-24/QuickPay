@@ -22,7 +22,7 @@ export default function PaymentForm({ eventId: qrEventId, gmail: qrGmail }) {
 
   const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
-  const [merchantGmail, setMerchantGmail] = useState("");
+  const [merchantGmail, setMerchantGmail] = useState(stateData.gmail);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [transactionData, setTransactionData] = useState(null);
