@@ -108,7 +108,7 @@ function NavBar() {
             }
 
           </ul>
-          <div className="md:hidden fixed top-5 right-4 bg-[#6c5ce7] text-white p-2 rounded-lg z-50" onClick={handleClick}>
+          <div className="md:hidden bg-[#6c5ce7] text-white p-2 rounded-lg z-50" onClick={handleClick}>
             {/* <i className={click ? "fas fa-times" : "fas fa-bars"}></i> */}
 
             {click ? (
