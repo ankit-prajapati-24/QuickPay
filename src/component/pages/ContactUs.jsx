@@ -6,7 +6,7 @@ const ContactUs = () => {
     <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center">
       {/* Contact Form and Information */}
       <div className="w-full md:w-1/2 md:pr-8">
-        <h2 className="text-3xl font-bold text-purple-700 mb-8">Contact Us</h2>
+        <h2 className="text-3xl font-bold text-[#6c5ce7] mb-8">Contact Us</h2>
         <form className="space-y-6">
           {/* Name Field */}
           <div>
@@ -54,7 +54,7 @@ const ContactUs = () => {
           <div>
             <button
               type="submit"
-              className="w-full bg-purple-700 text-white px-6 py-3 rounded-lg hover:bg-purple-800 transition duration-300"
+              className="w-full bg-[#6c5ce7] text-white px-6 py-3 rounded-lg hover:bg-purple-800 transition duration-300"
             >
               Send Message
             </button>
@@ -63,7 +63,7 @@ const ContactUs = () => {
   
         {/* Contact Information */}
         <div className="mt-8">
-          <h3 className="text-xl font-bold text-purple-700 mb-4">Our Contact Info</h3>
+          <h3 className="text-xl font-bold text-[#6c5ce7] mb-4">Our Contact Info</h3>
           <ul className="space-y-2">
             <li className="text-gray-600">
               <span className="font-semibold">Email:</span> info@digitaltokensystem.com

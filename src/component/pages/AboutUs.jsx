@@ -36,7 +36,7 @@ const AboutUs = () => {
 
           {/* Content on the Right */}
           <div className="w-full md:w-1/2 md:pl-8" data-aos="fade-left">
-            <h2 className="text-3xl font-bold text-purple-700 mb-6">About the Website</h2>
+            <h2 className="text-3xl font-bold text-[#6c5ce7] mb-6">About the Website</h2>
             <p className="text-gray-600 mb-4">
               The Digital Token System is a revolutionary platform designed to provide seamless and independent transaction environments for entities like colleges, offices, and events. Our goal is to empower organizations to manage transactions efficiently without relying on traditional banking systems.
             </p>
@@ -59,7 +59,7 @@ const AboutUs = () => {
 
           {/* Content on the Left */}
           <div className="w-full md:w-1/2 md:pr-8" data-aos="fade-right">
-            <h2 className="text-3xl font-bold text-purple-700 mb-6">Who We Are</h2>
+            <h2 className="text-3xl font-bold text-[#6c5ce7] mb-6">Who We Are</h2>
             <p className="text-gray-600 mb-4">
               We are a team of passionate developers, designers, and innovators dedicated to creating solutions that simplify and enhance everyday transactions. Our mission is to provide organizations with the tools they need to operate independently and efficiently.
             </p>
@@ -72,7 +72,7 @@ const AboutUs = () => {
         {/* Section 3: Our Developers */}
          {/* Section 3: Our Developers */}
          <div className="text-center">
-          <h2 className="text-3xl font-bold text-purple-700 mb-8" data-aos="fade-up">
+          <h2 className="text-3xl font-bold text-[#6c5ce7] mb-8" data-aos="fade-up">
             Our Developers
           </h2>
           <div className="relative">
@@ -99,7 +99,7 @@ const AboutUs = () => {
 
                 {/* Developer Details */}
                 <div className="w-full md:w-1/2 md:px-8 text-center md:text-left">
-                  <h3 className="text-2xl font-bold text-purple-700 mb-2">
+                  <h3 className="text-2xl font-bold text-[#6c5ce7] mb-2">
                     {developer.name}
                   </h3>
                   <p className="text-gray-600 mb-4">{developer.role}</p>
