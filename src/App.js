@@ -101,8 +101,8 @@ function App() {
                 <Route path="/*" element={<HomePage />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
-                <Route path="/about-us" element={<AboutUs />} />
-                <Route path="/contact-us" element={<ContactUs />} />
+                <Route path="/AboutUs" element={<AboutUs />} />
+                <Route path="/ContactUs" element={<ContactUs />} />
               </Routes>
             </div>
             <Footer />
