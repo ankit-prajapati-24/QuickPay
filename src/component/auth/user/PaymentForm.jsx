@@ -16,9 +16,9 @@ export default function PaymentForm({ eventId: qrEventId, gmail: qrGmail }) {
   const stateData = location.state || {}; // Data from navigate("/user/payment", { state: userData })
 
   // Prioritize data sources (state > QR > Redux)
-  const eventId = stateData.eventId || qrEventId || userdata.eventId;
-  const senderGmail = stateData.gmail || qrGmail || userdata.gmail;
-  const senderName = stateData.name || userdata?.name || "Unknown User";
+  const eventId = stateData.eventId ;
+  const senderGmail = userdata.gmail;
+  const senderName = userdata?.name;
 
   const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
