@@ -130,7 +130,7 @@ const ManageUsers = () => {
           onClick={() => setShowAddUserModal(true)}
           className="ml-4 bg-[#6c5ce7] text-white p-2 rounded flex items-center justify-center hover:bg-[#5a4acf] transition duration-300"
         >
-          <FaPlus className="mr-2" /> Add 
+          <FaPlus className="mr-2" /> Add
         </button>
       </div>
 
@@ -149,29 +149,29 @@ const ManageUsers = () => {
             .filter((user) => user.name.toLowerCase().includes(search.toLowerCase()))
             .map((user) => (
               <div
-  key={user.id}
-  className="border p-6 rounded-xl hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-[#ffffff] to-[#f0f4ff] border-gray-200"
->
-  {/* User Details */}
-  <div className="flex flex-col items-center space-y-3">
-    <img
-      src={`https://ui-avatars.com/api/?name=${user?.name || "N/A"}&size=128&background=6c5ce7&color=fff`}
-      alt={user?.name || "N/A"}
-      className="h-16 w-16 rounded-full border-4 border-white shadow-md"
-    />
-    <p className="font-bold text-xl text-gray-800">{user.name}</p>
-    <p className="text-sm text-gray-600">Email: {user.gmail}</p>
-    <p className="text-sm text-gray-600">Balance: ${user.balance}</p>
-  </div>
+                key={user.id}
+                className="border p-6 rounded-xl hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-[#ffffff] to-[#f0f4ff] border-gray-200"
+              >
+                {/* User Details */}
+                <div className="flex flex-col items-center space-y-3">
+                  <img
+                    src={`https://ui-avatars.com/api/?name=${user?.name || "N/A"}&size=128&background=6c5ce7&color=fff`}
+                    alt={user?.name || "N/A"}
+                    className="h-16 w-16 rounded-full border-4 border-white shadow-md"
+                  />
+                  <p className="font-bold text-xl text-gray-800">{user.name}</p>
+                  <p className="text-sm text-gray-600">Email: {user.gmail}</p>
+                  <p className="text-sm text-gray-600">Balance: ${user.balance}</p>
+                </div>
 
-  {/* Load Money Button */}
-  <button
-    onClick={() => openLoadMoneyModal(user)}
-    className="mt-4 w-full bg-blue-500 text-white p-2 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors duration-200"
-  >
-    <FaMoneyBillWave className="mr-2" /> Load Money
-  </button>
-</div>
+                {/* Load Money Button */}
+                <button
+                  onClick={() => openLoadMoneyModal(user)}
+                  className="mt-4 w-full bg-blue-500 text-white p-2 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors duration-200"
+                >
+                  <FaMoneyBillWave className="mr-2" /> Load Money
+                </button>
+              </div>
             ))}
         </div>
       ) : (

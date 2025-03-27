@@ -14,7 +14,7 @@ import UserDashboard from "./component/auth/user/UserDashboard";
 import PaymentForm from "./component/auth/user/PaymentForm";
 import UserTransactionHistory from "./component/auth/user/UserTransactionHistory";
 import Scanner from "./component/auth/user/Scanner";
-
+import VerifyOtp from './component/auth/VerifyOtp'
 import MerchantDashboard from "./component/auth/merchant/MerchantDashboard";
 import MerchantTransactionHistory from "./component/auth/merchant/MerchantHistory";
 import MerchantHeader from "./component/auth/merchant/MerchantHeader";
@@ -103,6 +103,7 @@ function App() {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/AboutUs" element={<AboutUs />} />
                 <Route path="/ContactUs" element={<ContactUs />} />
+                <Route path="/VerifyOtp" element={<VerifyOtp />} />
               </Routes>
             </div>
             <Footer />

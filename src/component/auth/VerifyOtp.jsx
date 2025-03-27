@@ -33,7 +33,7 @@ const VerifyOtp = () => {
       }
       toast.success("Signup successful!");
       console.log(res.data);
-      // navigate("/login");
+      navigate("/login");
     } catch (err) {
       if (ref.current) {
         ref.current.complete(); // Complete the loading animation
