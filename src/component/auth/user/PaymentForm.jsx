@@ -16,7 +16,7 @@ export default function PaymentForm({ eventId: qrEventId, gmail: qrGmail }) {
   const stateData = location.state || {}; // Data from navigate("/user/payment", { state: userData })
 
   // Prioritize data sources (state > QR > Redux)
-  const eventId = stateData.eventId;
+  const eventId = stateData.eventId || userdata.eventId;
   const senderGmail = userdata.gmail;
   const senderName = userdata?.name;
 
@@ -62,6 +62,7 @@ export default function PaymentForm({ eventId: qrEventId, gmail: qrGmail }) {
     setIsLoading(true);
 
     try {
+      console.log("transacgionDetaisl ",transactionDetails);
       const response = await apiConnecter(
         "POST",
         "https://eventpaymentsystem.onrender.com/user-transaction/transaction",
