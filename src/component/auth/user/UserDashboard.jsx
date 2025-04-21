@@ -110,7 +110,11 @@ function UserDashboard({ userdata }) {
         <div className="bg-white rounded-2xl shadow-lg p-6 flex flex-col">
           <h3 className="text-lg font-semibold mb-4">Quick Pay</h3>
           {frequentMerchant ? (
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center" onClick={() => {
+              const userData = { gmail:frequentMerchant.email, eventId:userdata.eventId };
+              // Navigate to /user/payment with userData
+              navigate("/user/payment", { state: userData });
+            }}>
               <img src={`https://ui-avatars.com/api/?name=${frequentMerchant.name}`} alt="Merchant" className="w-16 h-16 rounded-full mb-2" />
               <p className="text-lg font-medium">{frequentMerchant.name}</p>
               <p className="text-sm text-gray-500">{frequentMerchant.email}</p>
@@ -147,7 +151,7 @@ function UserDashboard({ userdata }) {
           <p className="text-gray-500 text-sm text-center">Loading recent transactions...</p>
         ) : transactions.length > 0 ? (
           <>
-           <RecentActivity/>
+            <RecentActivity />
           </>
         ) : (
           <p className="text-gray-500 text-sm text-center">{error || "No recent activity. Your transactions will appear here."}</p>
