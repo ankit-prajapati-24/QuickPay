@@ -61,8 +61,11 @@ const Login = () => {
 
     try {
       const res = await apiConnecter("GET", `${API}/${formData.eventId}/${formData.email}`);
+
+
       const eventRes = await apiConnecter("GET",`https://eventpaymentsystem.onrender.com/data/eventname/${formData.eventId}`)
       const eventName = eventRes.data;
+
       console.log(res.data,eventName,'eventname');
 
       if (res.data && typeof res.data === "object") {
@@ -93,10 +96,14 @@ const Login = () => {
       });
        console.log(res);
       //   toast.dismiss(toastId);
-      if(res.data.rc == "02"){
-        toast.error(`Your not a valid ${formData.role}`);
+      if(res.data.rc != '00'){
+        toast.error(res.data.desc);
         return;
       }
+      // if(res.data.rc == "02"){
+      //   toast.error(`Your not a valid ${formData.role}`);
+      //   return;
+      // }
 
       if (formData.role == 'user') {
         storeData(process.env.REACT_APP_USER_DATA);
