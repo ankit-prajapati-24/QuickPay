@@ -20,13 +20,10 @@ const TransactionHistory = () => {
       setLoading(true);
       setError("");
       try {
-        const [userRes, merchantRes] = await Promise.all([
-          apiConnecter("GET", `https://eventpaymentsystem.onrender.com/data/admin-user/transactions/${userData?.eventId}/${userData?.gmail}`),
-          apiConnecter("GET", `https://eventpaymentsystem.onrender.com/data/admin-merchant/transactions/${userData?.eventId}/${userData?.gmail}`)
-        ]);
-        console.log(userRes,merchantRes);
-        setUserTransactions(userRes.data || []);
-        setMerchantTransactions(merchantRes.data || []);
+        const allTransactions = await apiConnecter("GET", `https://eventpaymentsystem.onrender.com/data/admin-transactions/${userData?.eventId}`);
+        console.log(allTransactions);
+        setUserTransactions(allTransactions.data);
+        // setMerchantTransactions(merchantRes.data || []);
       } catch (error) {
         console.error("Error fetching transactions:", error);
         setError("Failed to fetch transactions. Please try again.");

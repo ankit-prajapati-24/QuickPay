@@ -61,7 +61,7 @@ const ManageUsers = () => {
 
   // Handle Load Money
   const handleLoadMoney = async () => {
-    if (!loadMoneyData.amount || loadMoneyData.amount <= 0 || !loadMoneyData.desc) {
+    if (!loadMoneyData.amount || loadMoneyData.amount <= 0 ) {
       alert("Please enter a valid amount and description.");
       return;
     }
