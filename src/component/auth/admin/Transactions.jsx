@@ -4,14 +4,8 @@ import { useSelector } from "react-redux";
 import { FaSpinner, FaSearch, FaExclamationCircle, FaWallet, FaMoneyCheckAlt, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 
 const TransactionHistory = () => {
-  // const userData = useSelector((state) => state.User.userdata);
-  const userData ={
-    eventId: "359925",
-    gmail: "bhanuteja4498@gmail.com",
-    password: "1111",
-    name: "bhanu",
-    adminType: false
-  };
+  const userData = useSelector((state) => state.User.userdata);
+ 
 
   const [userTransactions, setUserTransactions] = useState([]);
   const [merchantTransactions, setMerchantTransactions] = useState([]);
