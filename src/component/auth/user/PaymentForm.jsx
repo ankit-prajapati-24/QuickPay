@@ -16,7 +16,7 @@ export default function PaymentForm({ eventId: qrEventId, gmail: qrGmail }) {
   const stateData = location.state || {}; // Data from navigate("/user/payment", { state: userData })
 
   // Prioritize data sources (state > QR > Redux)
-  const eventId = stateData.eventId ;
+  const eventId = stateData.eventId;
   const senderGmail = userdata.gmail;
   const senderName = userdata?.name;
 
@@ -48,7 +48,8 @@ export default function PaymentForm({ eventId: qrEventId, gmail: qrGmail }) {
       amount: parseInt(amount, 10),
       type: "credit",
       status: "Success",
-      desc: note,
+      desc: `Transaction of ${amount} has been successful`,
+
       timestamp: new Date().toLocaleString(),
     };
 
@@ -159,9 +160,8 @@ export default function PaymentForm({ eventId: qrEventId, gmail: qrGmail }) {
             placeholder="Enter Merchant Gmail"
             value={merchantGmail}
             onChange={(e) => setMerchantGmail(e.target.value)}
-            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#6c5ce7] mb-4 ${
-              errors.merchantGmail ? "border-red-500" : "border-gray-300"
-            }`}
+            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#6c5ce7] mb-4 ${errors.merchantGmail ? "border-red-500" : "border-gray-300"
+              }`}
           />
           {errors.merchantGmail && (
             <p className="text-red-500 text-sm">{errors.merchantGmail}</p>
@@ -175,9 +175,8 @@ export default function PaymentForm({ eventId: qrEventId, gmail: qrGmail }) {
             placeholder="Enter amount"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#6c5ce7] mb-4 ${
-              errors.amount ? "border-red-500" : "border-gray-300"
-            }`}
+            className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#6c5ce7] mb-4 ${errors.amount ? "border-red-500" : "border-gray-300"
+              }`}
           />
           {errors.amount && <p className="text-red-500 text-sm">{errors.amount}</p>}
 

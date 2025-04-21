@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 import "./App.css";
 import NavBar from "./component/common/navbar";
@@ -30,86 +30,120 @@ import DashboardHome from "./component/auth/admin/DashboardHome";
 import ManageAdmins from "./component/auth/admin/ManageAdmins";
 import Notification from "./component/auth/Notification";
 import Profile from "./component/common/Profile";
+import { setToken, setuserdata } from "./slices/UserSlice";
+import { apiConnecter } from "./component/services/apiconnecter";
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const { userdata, role } = useSelector((state) => state.User);
+  const dispatch = useDispatch();
+  const storeData = async (API) => {
+
+    try {
+      const res = await apiConnecter("GET", `${API}/${userdata.eventId}/${userdata.gmail}`);
+      const eventRes = await apiConnecter("GET", `https://eventpaymentsystem.onrender.com/data/eventname/${userdata.eventId}`)
+      const eventName = eventRes.data;
+      console.log(res.data, eventName, 'eventname');
+
+      if (res.data && typeof res.data === "object") {
+        dispatch(setuserdata({ ...res.data, eventName: eventName }));
+        dispatch(setToken(res.data.gmail || "")); // Ensure token is correctly set
+      } else {
+        console.error("Invalid API response:", res.data);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+
+  }
+  useEffect(() => {
+    console.log("called");
+    if (role == 'user') {
+      storeData(process.env.REACT_APP_USER_DATA);
+    } else if (role == 'merchant') {
+      storeData(process.env.REACT_APP_MERCHANT_DATA);
+    }
+    else if (role == 'admin') {
+      storeData(process.env.REACT_APP_ADMIN_DATA);
+    }
+  }, [])
 
   return (
-      <div className="flex flex-col min-h-screen w-full overflow-x-hidden">
-        {role === "user" ? (
-          <>
-            <MerchantHeader merchantData={userdata} />
-            <div className="flex flex-col md:flex-row flex-1 min-h-screen">
-              <div className="flex-1 w-full mt-24  lg:mt-16 md:mt-16 ">
-                <Routes>
-                  <Route path="/user-dashboard" element={<UserDashboard userdata={userdata} />} />
-                  <Route path="/about-us" element={<AboutUs />} />
-                  <Route path="/contact-us" element={<ContactUs />} />
-                  <Route path="/user/profile" element={<Profile userData={userdata} role={role} />} />
-                  <Route path="/user/transactions" element={<MerchantTransactionHistory />} />
-                  <Route path="/user/payment" element={<PaymentForm />} />
-                  <Route path="/user/history" element={<UserTransactionHistory />} />
-                  <Route path="/user/scan" element={<Scanner />} />
-                  <Route path="/notification" element={<Notification />} />
-
-                  <Route path="/*" element={<UserDashboard userdata={userdata} />} />
-                </Routes>
-              </div>
-            </div>
-          </>
-        ) : role === "merchant" ? (
-          <>
-            <MerchantHeader merchantData={userdata} />
-            <div className="flex flex-col md:flex-row flex-1 min-h-screen">
-              <div className="flex-1 w-full ">
-                <Routes>
-                  <Route path="/merchant-dashboard" element={<MerchantDashboard />} />
-                  <Route path="/about-us" element={<AboutUs />} />
-                  <Route path="/contact-us" element={<ContactUs />} />
-                  <Route path="/merchant/profile" element={<MerchantProfile merchantData={userdata} />} />
-                  <Route path="/merchant/transactions" element={<MerchantTransactionHistory />} />
-                  <Route path="/notification" element={<Notification />} />
-                </Routes>
-              </div>
-            </div>
-          </>
-        ) : role === "admin" ? (
-          <>
-            <MerchantHeader merchantData={userdata}/>
-            <div className="flex flex-row w-full min-h-screen">
-              <AdminSidebar />
-              <div className="flex-1 p-4 mt-24  lg:mt-12 md:mt-12">
-                <Routes>
-                  <Route path="/*" element={<DashboardHome />} />
-                  <Route path="/admin/dashboard" element={<DashboardHome />} />
-                  <Route path="/admin/users" element={<ManageUsers />} />
-                  <Route path="/admin/admins" element={<ManageAdmins />} />
-                  <Route path="/admin/profile" element={<Profile userData={userdata} role={role} />} />
-                  <Route path="/admin/merchants" element={<ManageMerchants />} />
-                  <Route path="/admin/transactions" element={<Transactions />} />
-                  <Route path="/notification" element={<Notification />} />
-                  <Route path="/admin/redemption-requests" element={<RedemptionRequests />} />
-                </Routes>
-              </div>
-            </div>
-          </>
-        ) : (
-          <>
-            <NavBar />
-            <div className="flex-grow p-6">
+    <div className="flex flex-col min-h-screen w-full overflow-x-hidden">
+      {role === "user" ? (
+        <>
+          <MerchantHeader merchantData={userdata} />
+          <div className="flex flex-col md:flex-row flex-1 min-h-screen">
+            <div className="flex-1 w-full mt-24  lg:mt-16 md:mt-16 ">
               <Routes>
-                <Route path="/*" element={<HomePage />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/AboutUs" element={<AboutUs />} />
-                <Route path="/ContactUs" element={<ContactUs />} />
-                <Route path="/VerifyOtp" element={<VerifyOtp />} />
+                <Route path="/user-dashboard" element={<UserDashboard userdata={userdata} />} />
+                <Route path="/about-us" element={<AboutUs />} />
+                <Route path="/contact-us" element={<ContactUs />} />
+                <Route path="/user/profile" element={<Profile userData={userdata} role={role} />} />
+                <Route path="/user/transactions" element={<MerchantTransactionHistory />} />
+                <Route path="/user/payment" element={<PaymentForm />} />
+                <Route path="/user/history" element={<UserTransactionHistory />} />
+                <Route path="/user/scan" element={<Scanner />} />
+                <Route path="/notification" element={<Notification />} />
+
+                <Route path="/*" element={<UserDashboard userdata={userdata} />} />
               </Routes>
             </div>
-            <Footer />
-          </>
-        )}
-      </div>
+          </div>
+        </>
+      ) : role === "merchant" ? (
+        <>
+          <MerchantHeader merchantData={userdata} />
+          <div className="flex flex-col md:flex-row flex-1 min-h-screen">
+            <div className="flex-1 w-full ">
+              <Routes>
+                <Route path="/merchant-dashboard" element={<MerchantDashboard />} />
+                <Route path="/about-us" element={<AboutUs />} />
+                <Route path="/contact-us" element={<ContactUs />} />
+                <Route path="/merchant/profile" element={<MerchantProfile merchantData={userdata} />} />
+                <Route path="/merchant/transactions" element={<MerchantTransactionHistory />} />
+                <Route path="/notification" element={<Notification />} />
+              </Routes>
+            </div>
+          </div>
+        </>
+      ) : role === "admin" ? (
+        <>
+          <MerchantHeader merchantData={userdata} />
+          <div className="flex flex-row w-full min-h-screen">
+            <AdminSidebar />
+            <div className="flex-1 p-4 mt-24  lg:mt-12 md:mt-12">
+              <Routes>
+                <Route path="/*" element={<DashboardHome />} />
+                <Route path="/admin/dashboard" element={<DashboardHome />} />
+                <Route path="/admin/users" element={<ManageUsers />} />
+                <Route path="/admin/admins" element={<ManageAdmins />} />
+                <Route path="/admin/profile" element={<Profile userData={userdata} role={role} />} />
+                <Route path="/admin/merchants" element={<ManageMerchants />} />
+                <Route path="/admin/transactions" element={<Transactions />} />
+                <Route path="/notification" element={<Notification />} />
+                <Route path="/admin/redemption-requests" element={<RedemptionRequests />} />
+              </Routes>
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <NavBar />
+          <div className="flex-grow p-6">
+            <Routes>
+              <Route path="/*" element={<HomePage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/AboutUs" element={<AboutUs />} />
+              <Route path="/ContactUs" element={<ContactUs />} />
+              <Route path="/VerifyOtp" element={<VerifyOtp />} />
+            </Routes>
+          </div>
+          <Footer />
+        </>
+      )}
+    </div>
   );
 }
 

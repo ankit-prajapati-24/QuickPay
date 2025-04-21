@@ -6,6 +6,7 @@ import AdminInfo from "./AdminInfo";
 
 const DashboardHome = () => {
     const userData = useSelector((state) => state.User.userdata);
+    console.log("user data ",userData);
     const [eventDetails, setEventDetails] = useState({
         eventId: userData?.eventId,
         eventName: userData?.eventName || "Tech Conference 2023",

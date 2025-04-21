@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { apiConnecter } from "../../services/apiconnecter";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaSpinner, FaMoneyCheckAlt, FaQrcode, FaUser, FaEnvelope, FaPhone, FaIdBadge } from "react-icons/fa";
 import { QRCodeSVG } from "qrcode.react";
 import MerchantSidebar from "./MerchantSidebar";
@@ -8,6 +8,8 @@ import BalanceCard from "./BalanceCard";
 import MerchantInfo from "./MerchantInfo";
 import QRCodeSection from "./QRCodeSection";
 import MerchantTransactionHistory from "./MerchantHistory";
+import { setuserdata } from "../../../slices/UserSlice";
+
 
 const MerchantDashboard = () => {
   const userData = useSelector((state) => state.User.userdata);
@@ -17,6 +19,7 @@ const MerchantDashboard = () => {
   const [balance, setBalance] = useState(0);
   const [redeemAmount, setRedeemAmount] = useState(0);
   const [showQRCode, setShowQRCode] = useState(false);
+  const dispatch = useDispatch();
 
   // Merchant details
   const merchantDetails = {
@@ -49,7 +52,7 @@ const MerchantDashboard = () => {
         
         console.log(merchantRes,merchantRes.data.balance);
         
-        setBalance(merchantRes.data.balance || 0);
+        dispatch(setuserdata(merchantRes.data));
       } catch (error) {
         console.error("Error fetching merchant data:", error);
         // setError("Failed to fetch merchant data. Please try again.");
@@ -61,7 +64,7 @@ const MerchantDashboard = () => {
     if (userData?.eventId && userData?.gmail) {
       fetchMerchantData();
     }
-  }, [userData]);
+  }, []);
 
   // Handle Redeem Balance
   const handleRedeemBalance = async () => {

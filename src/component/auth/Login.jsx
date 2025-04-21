@@ -61,10 +61,12 @@ const Login = () => {
 
     try {
       const res = await apiConnecter("GET", `${API}/${formData.eventId}/${formData.email}`);
-      console.log(res.data);
+      const eventRes = await apiConnecter("GET",`https://eventpaymentsystem.onrender.com/data/eventname/${formData.eventId}`)
+      const eventName = eventRes.data;
+      console.log(res.data,eventName,'eventname');
 
       if (res.data && typeof res.data === "object") {
-        dispatch(setuserdata(res.data));
+        dispatch(setuserdata({...res.data,eventName:eventName}));
         dispatch(setToken(res.data.gmail || "")); // Ensure token is correctly set
       } else {
         console.error("Invalid API response:", res.data);
@@ -84,13 +86,12 @@ const Login = () => {
     const toastId = toast.loading('Waiting......');
     try {
       const API = `https://eventpaymentsystem.onrender.com/${formData.role}/login/${formData.eventId}/${formData.email}/${formData.password}`;
-
       const res = await apiConnecter("GET", API, "", "", {
         eventId: formData.eventId,
         gmail: formData.email,
         password: formData.password,
       });
-      console.log(res);
+       console.log(res);
       //   toast.dismiss(toastId);
       if(res.data.rc == "02"){
         toast.error(`Your not a valid ${formData.role}`);

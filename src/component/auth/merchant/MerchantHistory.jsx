@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useTransition } from "react";
 import { apiConnecter } from "../../services/apiconnecter";
 import { useSelector } from "react-redux";
 import { FaSpinner, FaSearch } from "react-icons/fa";
@@ -17,10 +17,10 @@ const MerchantTransactionHistory = () => {
       setLoading(true);
       try {
         const [userRes, merchantRes] = await Promise.all([
-          apiConnecter("GET", `https://eventpaymentsystem.onrender.com/data/admin-user/transactions/${userData?.eventId}/${userData?.gmail}`),
+          apiConnecter("GET", `https://eventpaymentsystem.onrender.com/data/merchant-transactions/${userData?.eventId}/${userData?.gmail}`),
           apiConnecter("GET", `https://eventpaymentsystem.onrender.com/data/admin-merchant/transactions/${userData?.eventId}/${userData?.gmail}`),
         ]);
-        console.log(userRes,merchantRes);
+        console.log(userRes, merchantRes);
         setUserTransactions(userRes.data || []);
         setMerchantTransactions(merchantRes.data || []);
       } catch (error) {
@@ -37,12 +37,13 @@ const MerchantTransactionHistory = () => {
   }, [userData]);
 
   // Combine and filter transactions
-  const allTransactions = [...userTransactions, ...merchantTransactions];
-  const filteredTransactions = allTransactions.filter(
-    (transaction) =>
-      transaction.receiverName?.toLowerCase().includes(search.toLowerCase()) ||
-      transaction.receiverGmail?.toLowerCase().includes(search.toLowerCase())
-  );
+  // const allTransactions = [...userTransactions, ...merchantTransactions];
+  // const filteredTransactions = allTransactions.filter(
+  //   (transaction) =>
+  //     transaction.receiverName?.toLowerCase().includes(search.toLowerCase()) ||
+  //     transaction.receiverGmail?.toLowerCase().includes(search.toLowerCase())
+  // );
+  // const filteredTransactions = allTransactions;
 
   return (
     <div className="max-w-6xl mx-auto p-6 bg-white shadow-lg rounded-lg">
@@ -69,14 +70,29 @@ const MerchantTransactionHistory = () => {
       {error && <p className="text-center text-red-500 mt-4">{error}</p>}
 
       {/* Show All Transactions */}
-      {filteredTransactions.length > 0 ? (
+      {userTransactions.length === 0 && merchantTransactions.length === 0 ? (
+        <p className="text-center text-gray-500 mt-4">No transactions found.</p>
+      ) : (
         <div className="space-y-4">
-          {filteredTransactions.map((transaction, index) => (
+          {userTransactions.reverse().map((transaction, index) => (
             <div key={index} className="border p-4 rounded-lg hover:shadow-md transition-shadow duration-300">
               <p className="font-semibold text-lg">
-                {transaction.type === "load" ? "Wallet Load" : "Redeem"} - {transaction.receiverName}
+                {"Credited"} - {userData.name}
               </p>
-              <p className="text-sm text-gray-600">Receiver Email: {transaction.receiverGmail}</p>
+              <p className="text-sm text-gray-600">Credited By Email: {transaction.receiverGmail || transaction.senderGmail}</p>
+              <p className="text-sm text-gray-600">Amount: ${transaction.amount}</p>
+              <p className="text-sm text-gray-600">Description: {transaction.desc}</p>
+              <p className="text-sm text-gray-600">Status: {transaction.status}</p>
+              <p className="text-sm text-gray-600">Timestamp: {new Date(transaction.timestamp).toLocaleString()}</p>
+            </div>
+          ))}
+
+          {merchantTransactions.reverse().map((transaction, index) => (
+            <div key={index} className="border p-4 rounded-lg hover:shadow-md transition-shadow duration-300">
+              <p className="font-semibold text-lg">
+                {transaction.type === 'load' ? "Wallet Load" : "Debited"} - {userData.name}
+              </p>
+              <p className="text-sm text-gray-600">By Email: {transaction.receiverGmail || transaction.senderGmail}</p>
               <p className="text-sm text-gray-600">Amount: ${transaction.amount}</p>
               <p className="text-sm text-gray-600">Description: {transaction.desc}</p>
               <p className="text-sm text-gray-600">Status: {transaction.status}</p>
@@ -84,9 +100,8 @@ const MerchantTransactionHistory = () => {
             </div>
           ))}
         </div>
-      ) : (
-        <p className="text-center text-gray-500 mt-4">No transactions found.</p>
       )}
+
     </div>
   );
 };

@@ -137,7 +137,7 @@ const HomePage = () => {
         </div>
       </div>
 
-      
+       
       <div id="why-choose-us" className="bg-gradient-to-r from-purple-50 to-blue-50 py-16">
   <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center">
     {/* Model (Image) on the Left - Hidden on Small Screens */}
